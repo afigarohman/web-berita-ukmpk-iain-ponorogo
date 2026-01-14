@@ -10,14 +10,8 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'slug',
-        'thumbnail',
-        'content',
-        'category',
-        'author',
-        'is_published',
-    ];
+    'title', 'slug', 'category', 'content', 'thumbnail', 'author', 'is_published', 'is_popular' // <--- Tambahkan ini
+];
 
     public function views()
     {

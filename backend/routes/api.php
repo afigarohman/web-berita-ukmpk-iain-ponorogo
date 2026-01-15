@@ -2,12 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PostController;
-
-Route::get('/user', function (Request $request) {
+use App\Http\Controllers\Api\PublicPostController; 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+});
 
-Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts', [PublicPostController::class, 'index']);
 
-Route::get('/posts/{slug}', [PostController::class, 'show']);
+Route::get('/posts/{slug}', [PublicPostController::class, 'show']);

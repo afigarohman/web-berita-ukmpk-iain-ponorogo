@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin Dashboard - UKM PK</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -78,9 +79,16 @@
                     <span class="mr-3 text-[#d4a017]">📚</span> Sastra
                 </a>
 
-                <form method="POST" action="{{ route('logout') }}" class="mt-10 mb-6">
+                <p class="px-4 text-xs font-semibold text-gray-400 uppercase mt-4 mb-2">Interaksi</p>
+
+                <a href="{{ route('admin.comments.index') }}" 
+                   class="flex items-center px-4 py-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors {{ request()->routeIs('admin.comments.*') ? 'sidebar-active' : '' }}">
+                    <span class="mr-3 text-[#d4a017]">💬</span> Komentar
+                </a>
+
+                <form method="POST" action="{{ route('logout') }}" class="mt-10 mb-6 px-4">
                     @csrf
-                    <button type="submit" class="flex w-full items-center px-4 py-3 text-sm font-medium text-red-300 hover:bg-red-900 rounded-lg transition-colors">
+                    <button type="submit" class="flex w-full items-center px-4 py-3 text-sm font-medium text-red-300 hover:bg-red-900 rounded-lg transition-colors border border-transparent hover:border-red-500">
                         <span class="mr-3">🚪</span> Logout
                     </button>
                 </form>
@@ -88,6 +96,20 @@
         </aside>
 
         <main class="flex-1 ml-64 p-8">
+            @if(session('success'))
+                <div class="mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm" role="alert">
+                    <p class="font-bold">Sukses</p>
+                    <p>{{ session('success') }}</p>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-sm" role="alert">
+                    <p class="font-bold">Error</p>
+                    <p>{{ session('error') }}</p>
+                </div>
+            @endif
+
             @yield('content')
         </main>
     </div>

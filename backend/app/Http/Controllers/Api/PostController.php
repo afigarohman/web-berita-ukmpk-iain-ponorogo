@@ -31,19 +31,16 @@ class PostController extends Controller
                 'post_id'    => $post->id,
                 'ip_address' => $ipAddress,
                 'user_agent' => $userAgent,
-                // 'user_id' => auth()->id() // Nyalakan ini jika nanti ada fitur login user
             ]);
         }
 
-        // --- KEMBALIKAN DATA KE FRONTEND ---
         return response()->json([
             'success' => true,
             'data'    => $post,
-            'views'   => $post->views()->count() // Kirim jumlah view terbaru
+            'views'   => $post->views()->count() 
         ]);
     }
     
-    // 2. API UNTUK LIST BERITA (UNTUK HOMEPAGE)
     public function index()
     {
         $posts = Post::where('is_published', true)

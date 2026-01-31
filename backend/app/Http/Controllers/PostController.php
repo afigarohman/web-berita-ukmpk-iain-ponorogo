@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    // KHUSUS ADMIN: Return VIEW (Halaman HTML)
     public function index(Request $request)
     {
         $category = $request->query('category');

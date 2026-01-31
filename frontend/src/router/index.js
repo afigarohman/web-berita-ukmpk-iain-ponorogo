@@ -1,14 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-// 1. IMPORT HALAMAN UTAMA & LOGIN
-// Perbaikan: Mengambil dari folder 'berita', bukan 'News'
 import Home from '../views/berita/Home.vue' 
 import Login from '../views/Login.vue'
 
-// 2. IMPORT COMPONENT BACA
 import DetailBaca from '../components/DetailBaca.vue' 
 
-// 3. IMPORT HALAMAN KATEGORI (Sesuai nama folder di screenshot)
 import ArtikelIndex from '../views/artikel/Artikel.vue'
 import BuletinIndex from '../views/buletin/Buletin.vue'
 import EsaiIndex from '../views/esai/Esai.vue'
@@ -19,12 +15,10 @@ import SastraIndex from '../views/sastra/Sastra.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  // Fungsi agar saat pindah halaman, scroll otomatis ke paling atas
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 }
   },
   routes: [
-    // --- HALAMAN UTAMA (BERITA = HOME) ---
     { 
       path: '/', 
       name: 'home', 
@@ -43,12 +37,10 @@ const router = createRouter({
       path: '/posts/:slug', 
       name: 'detail', 
       component: DetailBaca, 
-      meta: { requiresAuth: true } // Wajib Login
+      meta: { requiresAuth: true } 
     },
 
-    // --- KATEGORI MENU ---
-    // Pastikan path ini sesuai dengan link di Navbar
-    { path: '/berita', component: Home }, // Menu Berita mengarah ke Home juga
+    { path: '/berita', component: Home }, 
     { path: '/artikel', name: 'artikel', component: ArtikelIndex },
     { path: '/buletin', name: 'buletin', component: BuletinIndex },
     { path: '/esai', name: 'esai', component: EsaiIndex },
@@ -59,7 +51,6 @@ const router = createRouter({
   ]
 })
 
-// SATPAM (Navigation Guard)
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const isAuthenticated = localStorage.getItem('isLoggedIn');

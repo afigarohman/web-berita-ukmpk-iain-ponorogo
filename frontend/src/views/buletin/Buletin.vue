@@ -5,9 +5,9 @@
         Arsip Kategori
       </p>
       <h1
-        class="text-4xl md:text-6xl font-black font-serif text-gray-900 border-b-4 border-[#d4a017] inline-block pb-2"
+        class="text-2xl md:text-1xl font-black font-serif text-gray-900 border-b-4 border-[#d4a017] inline-block pb-2"
       >
-        Artikel
+        Buletin
       </h1>
     </div>
 

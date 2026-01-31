@@ -5,9 +5,9 @@
         Arsip Kategori
       </p>
       <h1
-        class="text-4xl md:text-6xl font-black font-serif text-gray-900 border-b-4 border-[#d4a017] inline-block pb-2"
+        class="text-2xl md:text-1xl font-black font-serif text-gray-900 border-b-4 border-[#d4a017] inline-block pb-2"
       >
-        {{ categoryName }}
+        Esai
       </h1>
     </div>
 
@@ -19,7 +19,7 @@
 
     <div v-else-if="posts.length === 0" class="text-center py-20 bg-gray-50 rounded-lg">
       <p class="text-xl text-gray-500 font-serif italic">
-        Belum ada tulisan di kategori {{ categoryName }}.
+        Belum ada tulisan di kategori Artikel.
       </p>
       <RouterLink
         to="/"
@@ -38,23 +38,17 @@
               :src="getImageUrl(post.thumbnail)"
               class="w-full h-full object-cover transition transform duration-500 group-hover:scale-105"
             />
-            <div
-              class="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition"
-            ></div>
           </div>
-
           <div class="flex items-center gap-2 mb-2 text-xs text-gray-500 font-sans">
             <span>{{ formatDate(post.created_at) }}</span>
             <span class="text-[#d4a017]">•</span>
             <span>{{ post.author || "Admin" }}</span>
           </div>
-
           <h3
             class="text-xl font-bold font-serif leading-tight group-hover:text-red-700 transition mb-3"
           >
             {{ post.title }}
           </h3>
-
           <p class="text-sm text-gray-600 font-serif line-clamp-3 leading-relaxed">
             {{ stripHtml(post.content) }}
           </p>
@@ -68,48 +62,34 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const categoryName = "Esai";
-
 const posts = ref([]);
 const loading = ref(true);
 
 const fetchPosts = async () => {
   loading.value = true;
   try {
-    const response = await axios.get(
-      `http://127.0.0.1:8000/api/posts?category=${categoryName}`
-    );
+    const response = await axios.get("http://127.0.0.1:8000/api/posts?category=Esai");
     posts.value = response.data.data.data;
   } catch (error) {
-    console.error("Gagal ambil data:", error);
+    console.error("Error:", error);
   } finally {
     loading.value = false;
   }
 };
 
-const getImageUrl = (path) => {
-  if (!path) return "https://via.placeholder.com/640x480";
-  if (path.startsWith("http")) return path;
-  return `http://127.0.0.1:8000/storage/${path}`;
-};
-
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("id-ID", {
+const getImageUrl = (path) =>
+  path?.startsWith("http") ? path : `http://127.0.0.1:8000/storage/${path}`;
+const formatDate = (d) =>
+  new Date(d).toLocaleDateString("id-ID", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
+const stripHtml = (h) => {
+  let t = document.createElement("div");
+  t.innerHTML = h;
+  return t.textContent || "";
 };
 
-const stripHtml = (html) => {
-  if (!html) return "";
-  let tmp = document.createElement("DIV");
-  tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || "";
-};
-
-onMounted(() => {
-  fetchPosts();
-});
+onMounted(() => fetchPosts());
 </script>

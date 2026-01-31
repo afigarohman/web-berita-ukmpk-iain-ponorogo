@@ -69,7 +69,9 @@ const fetchPosts = async () => {
   loading.value = true;
   try {
     // API Call DENGAN filter category=Artikel
-    const response = await axios.get("http://127.0.0.1:8000/api/posts?category=Artikel");
+    const response = await axios.get(
+      "https://8a4e3ae2b622.ngrok-free.app/api/posts?category=Artikel"
+    );
     posts.value = response.data.data.data;
   } catch (error) {
     console.error("Error:", error);
@@ -79,7 +81,7 @@ const fetchPosts = async () => {
 };
 
 const getImageUrl = (path) =>
-  path?.startsWith("http") ? path : `http://127.0.0.1:8000/storage/${path}`;
+  path?.startsWith("http") ? path : `https://8a4e3ae2b622.ngrok-free.app/storage/${path}`;
 const formatDate = (d) =>
   new Date(d).toLocaleDateString("id-ID", {
     day: "numeric",
